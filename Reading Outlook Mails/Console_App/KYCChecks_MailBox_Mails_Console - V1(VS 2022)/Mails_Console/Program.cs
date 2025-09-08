@@ -25,6 +25,7 @@ namespace Mails_Console
     {
         static void Main(string[] args)
         {
+            //new comments
             MailProcessor processor = new MailProcessor();
             processor.ProcessEmails();
             //Console.ReadKey();
