@@ -1,0 +1,13 @@
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Outlook_Mails\Outlook_Mails\bin\Debug\Outlook_Mails.exe.config
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Outlook_Mails\Outlook_Mails\obj\Debug\Outlook_Mails.csprojResolveAssemblyReference.cache
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Outlook_Mails\Outlook_Mails\obj\Debug\Outlook_Mails.Properties.Resources.resources
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Outlook_Mails\Outlook_Mails\obj\Debug\Outlook_Mails.Read_Outlook_Mail.resources
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Outlook_Mails\Outlook_Mails\obj\Debug\Outlook_Mails.csproj.GenerateResource.Cache
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Outlook_Mails\Outlook_Mails\bin\Debug\Outlook_Mails.exe
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Outlook_Mails\Outlook_Mails\bin\Debug\Outlook_Mails.pdb
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Outlook_Mails\Outlook_Mails\bin\Debug\Microsoft.Office.Tools.Outlook.v4.0.Utilities.dll
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Outlook_Mails\Outlook_Mails\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Outlook_Mails\Outlook_Mails\bin\Debug\Microsoft.Office.Tools.Outlook.v4.0.Utilities.xml
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Outlook_Mails\Outlook_Mails\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Outlook_Mails\Outlook_Mails\obj\Debug\Outlook_Mails.exe
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Outlook_Mails\Outlook_Mails\obj\Debug\Outlook_Mails.pdb

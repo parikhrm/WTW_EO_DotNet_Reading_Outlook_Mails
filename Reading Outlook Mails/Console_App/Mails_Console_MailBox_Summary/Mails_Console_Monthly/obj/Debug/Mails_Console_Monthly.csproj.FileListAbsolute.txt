@@ -1,0 +1,35 @@
+C:\Users\ParikhRm\Downloads\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Mails_Console_Monthly.exe.config
+C:\Users\ParikhRm\Downloads\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Mails_Console_Monthly.exe
+C:\Users\ParikhRm\Downloads\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Mails_Console_Monthly.pdb
+C:\Users\ParikhRm\Downloads\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Microsoft.Office.Tools.Outlook.v4.0.Utilities.dll
+C:\Users\ParikhRm\Downloads\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\ParikhRm\Downloads\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Microsoft.Office.Tools.Outlook.v4.0.Utilities.xml
+C:\Users\ParikhRm\Downloads\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
+C:\Users\ParikhRm\Downloads\Mails_Console_Monthly\Mails_Console_Monthly\obj\Debug\Mails_Console_Monthly.exe
+C:\Users\ParikhRm\Downloads\Mails_Console_Monthly\Mails_Console_Monthly\obj\Debug\Mails_Console_Monthly.pdb
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Mails_Console_Monthly.exe.config
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_Monthly\Mails_Console_Monthly\obj\Debug\Mails_Console_Monthly.exe
+C:\Users\ParikhRm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_Monthly\Mails_Console_Monthly\obj\Debug\Mails_Console_Monthly.pdb
+C:\Users\Parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Mails_Console_Monthly.exe
+C:\Users\Parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Mails_Console_Monthly.pdb
+C:\Users\Parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Microsoft.Office.Tools.Outlook.v4.0.Utilities.dll
+C:\Users\Parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\Parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Microsoft.Office.Tools.Outlook.v4.0.Utilities.xml
+C:\Users\Parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_Monthly\Mails_Console_Monthly\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_Monthly\Mails_Console_Monthly\obj\Debug\Mails_Console_Monthly.csproj.AssemblyReference.cache
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_Monthly\Mails_Console_Monthly\obj\Debug\Mails_Console_Monthly.exe.config
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_Monthly\Mails_Console_Monthly\obj\Debug\Mails_Console_Monthly.csproj.CoreCompileInputs.cache
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_Monthly\Mails_Console_Monthly\obj\Debug\Mails_Co.DBB3634A.Up2Date
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_MailBox_Summary\Mails_Console_Monthly\bin\Debug\Mails_Console_Monthly.exe.config
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_MailBox_Summary\Mails_Console_Monthly\bin\Debug\Mails_Console_Monthly.exe
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_MailBox_Summary\Mails_Console_Monthly\bin\Debug\Mails_Console_Monthly.pdb
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_MailBox_Summary\Mails_Console_Monthly\bin\Debug\Microsoft.Office.Tools.Outlook.v4.0.Utilities.dll
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_MailBox_Summary\Mails_Console_Monthly\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_MailBox_Summary\Mails_Console_Monthly\bin\Debug\Microsoft.Office.Tools.Outlook.v4.0.Utilities.xml
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_MailBox_Summary\Mails_Console_Monthly\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_MailBox_Summary\Mails_Console_Monthly\obj\Debug\Mails_Console_Monthly.csproj.AssemblyReference.cache
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_MailBox_Summary\Mails_Console_Monthly\obj\Debug\Mails_Console_Monthly.exe.config
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_MailBox_Summary\Mails_Console_Monthly\obj\Debug\Mails_Console_Monthly.csproj.CoreCompileInputs.cache
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_MailBox_Summary\Mails_Console_Monthly\obj\Debug\Mails_Co.DBB3634A.Up2Date
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_MailBox_Summary\Mails_Console_Monthly\obj\Debug\Mails_Console_Monthly.exe
+C:\Users\parikhrm\OneDrive - Willis Towers Watson\Azure - EO - Projects\Dot Net Projects\TCTO_2025\Reading Outlook Mails\Console_App\Mails_Console_MailBox_Summary\Mails_Console_Monthly\obj\Debug\Mails_Console_Monthly.pdb
