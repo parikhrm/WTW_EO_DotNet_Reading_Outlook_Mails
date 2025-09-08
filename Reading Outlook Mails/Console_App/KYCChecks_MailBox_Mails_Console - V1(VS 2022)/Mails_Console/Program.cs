@@ -1,5 +1,4 @@
-﻿using Microsoft.Office.Interop.Outlook;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.OleDb;
@@ -17,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using Outlook = Microsoft.Office.Interop.Outlook;
+using Microsoft.Office.Interop.Outlook;
 
 
 namespace Mails_Console
@@ -44,17 +44,41 @@ namespace Mails_Console
             }
 
             var addressList = new List<string>();
+            // COM collections are 1-based, so iterate from 1
             for (int i = 1; i <= recipients.Count; i++)
             {
                 Recipient recipient = recipients[i];
-                if (recipient.Type == (int)recipientType)
+                try
                 {
-                    addressList.Add(recipient.Address);
+                    if (recipient.Type == (int)recipientType)
+                    {
+                        const string PR_SMTP_ADDRESS = "http://schemas.microsoft.com/mapi/proptag/0x39FE001E";
+                        string smtpAddress = string.Empty;
+
+                        // Use PropertyAccessor for reliable SMTP address lookup
+                        try
+                        {
+                            smtpAddress = recipient.PropertyAccessor.GetProperty(PR_SMTP_ADDRESS).ToString();
+                        }
+                        catch
+                        {
+                            // Fallback to the regular Address property, which can be an internal address
+                            smtpAddress = recipient.Address;
+                        }
+
+                        if (!string.IsNullOrEmpty(smtpAddress))
+                        {
+                            addressList.Add(smtpAddress);
+                        }
+                    }
                 }
-                Marshal.ReleaseComObject(recipient);
+                finally
+                {
+                    if (recipient != null) Marshal.ReleaseComObject(recipient);
+                }
             }
 
-            Marshal.ReleaseComObject(recipients);
+            if (recipients != null) Marshal.ReleaseComObject(recipients);
 
             return string.Join(", ", addressList);
         }
@@ -249,55 +273,51 @@ namespace Mails_Console
             }
         }
 
-        private string GetRecipientEmailAddresses(Recipients recipients)
-        {
-            var recipientList = new List<string>();
+        //private string GetRecipientEmailAddresses(Recipients recipients)
+        //{
+        //    if (recipients == null || recipients.Count == 0)
+        //    {
+        //        return string.Empty;
+        //    }
 
-            if (recipients == null) return "";
+        //    var addressList = new List<string>();
+        //    // COM collections are 1-based, so iterate from 1
+        //    for (int i = 1; i <= recipients.Count; i++)
+        //    {
+        //        Recipient recipient = recipients[i];
+        //        try
+        //        {
+        //            if (recipient.Type == (int)recipientType)
+        //            {
+        //                const string PR_SMTP_ADDRESS = "http://schemas.microsoft.com/mapi/proptag/0x39FE001E";
+        //                string smtpAddress = string.Empty;
 
-            foreach (Recipient recipient in recipients)
-            {
-                try
-                {
-                    recipient.Resolve();
-                    if (recipient.Resolved)
-                    {
-                        AddressEntry addressEntry = recipient.AddressEntry;
-                        if (addressEntry != null)
-                        {
-                            // For Exchange users, get the primary SMTP address
-                            if (addressEntry.AddressEntryUserType == OlAddressEntryUserType.olExchangeUserAddressEntry ||
-                                addressEntry.AddressEntryUserType == OlAddressEntryUserType.olExchangeDistributionListAddressEntry)
-                            {
-                                if (addressEntry.GetExchangeUser() != null)
-                                {
-                                    recipientList.Add(addressEntry.GetExchangeUser().PrimarySmtpAddress);
-                                }
-                                else if (addressEntry.GetExchangeDistributionList() != null)
-                                {
-                                    recipientList.Add(addressEntry.GetExchangeDistributionList().PrimarySmtpAddress);
-                                }
-                            }
-                            else
-                            {
-                                // For other address types, use the general address property
-                                recipientList.Add(addressEntry.Address);
-                            }
-                            Marshal.ReleaseComObject(addressEntry);
-                        }
-                    }
-                }
-                catch (System.Exception ex)
-                {
-                    //Console.WriteLine($"Error resolving recipient: {ex.Message}");
-                }
-                finally
-                {
-                    if (recipient != null) Marshal.ReleaseComObject(recipient);
-                }
-            }
+        //                // Use PropertyAccessor for reliable SMTP address lookup
+        //                try
+        //                {
+        //                    smtpAddress = recipient.PropertyAccessor.GetProperty(PR_SMTP_ADDRESS).ToString();
+        //                }
+        //                catch
+        //                {
+        //                    // Fallback to the regular Address property
+        //                    smtpAddress = recipient.Address;
+        //                }
 
-            return string.Join(";", recipientList);
-        }
+        //                if (!string.IsNullOrEmpty(smtpAddress))
+        //                {
+        //                    addressList.Add(smtpAddress);
+        //                }
+        //            }
+        //        }
+        //        finally
+        //        {
+        //            if (recipient != null) Marshal.ReleaseComObject(recipient);
+        //        }
+        //    }
+
+        //    if (recipients != null) Marshal.ReleaseComObject(recipients);
+
+        //    return string.Join(", ", addressList);
+        //}
     }
 }
