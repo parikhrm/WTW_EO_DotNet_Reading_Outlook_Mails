@@ -36,6 +36,29 @@ namespace Mails_Console
     {
         private string connectionstringtxt = "Data Source=A20-CB-DBSE01P;Initial Catalog=DRD;User ID=DRDUsers;Password=24252425";
 
+        private string GetRecipientAddressesFromCollection(Recipients recipients, OlMailRecipientType recipientType)
+        {
+            if (recipients == null || recipients.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            var addressList = new List<string>();
+            for (int i = 1; i <= recipients.Count; i++)
+            {
+                Recipient recipient = recipients[i];
+                if (recipient.Type == (int)recipientType)
+                {
+                    addressList.Add(recipient.Address);
+                }
+                Marshal.ReleaseComObject(recipient);
+            }
+
+            Marshal.ReleaseComObject(recipients);
+
+            return string.Join(", ", addressList);
+        }
+
         public void ProcessEmails()
         {
             SqlCommand cmd = new SqlCommand();
@@ -55,7 +78,7 @@ namespace Mails_Console
             }
             catch (System.Exception ex)
             {
-                Console.WriteLine($"Error truncating table: {ex.Message}");
+                //onsole.WriteLine($"Error truncating table: {ex.Message}");
             }
 
 
@@ -82,7 +105,7 @@ namespace Mails_Console
                 filteredItems = inbox.Items.Restrict(filter);
                 filteredItems.Sort("[ReceivedTime]", true);
 
-                Console.WriteLine($"Processing {filteredItems.Count} emails...");
+                //Console.WriteLine($"Processing {filteredItems.Count} emails...");
 
                 foreach (object item in filteredItems)
                 {
@@ -148,7 +171,12 @@ namespace Mails_Console
                             }
 
                             // Call the helper method to get recipient email addresses
-                            string toRecipients = GetRecipientEmailAddresses(mail.Recipients);
+                            //string toRecipients = GetRecipientEmailAddresses(mail.Recipients);
+                            
+                            // FIX: Get only 'To' addresses using the new helper method
+                            string toRecipients = GetRecipientAddressesFromCollection(mail.Recipients, OlMailRecipientType.olTo);
+
+
 
                             using (SqlConnection conn = new SqlConnection(connectionstringtxt))
                             {
@@ -217,7 +245,7 @@ namespace Mails_Console
             }
             catch (SystemException ab)
             {
-                //MessageBox.Show("Error Generated Details: " + ab.ToString());
+                //Console.WriteLine("Error Generated Details: " + ab.ToString());
             }
         }
 
@@ -261,7 +289,7 @@ namespace Mails_Console
                 }
                 catch (System.Exception ex)
                 {
-                    Console.WriteLine($"Error resolving recipient: {ex.Message}");
+                    //Console.WriteLine($"Error resolving recipient: {ex.Message}");
                 }
                 finally
                 {
