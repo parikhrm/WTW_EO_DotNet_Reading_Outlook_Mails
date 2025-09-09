@@ -107,7 +107,7 @@ namespace Mails_Console
 
 
             DateTime today = DateTime.Today;
-            DateTime thirtyDaysAgo = today.AddDays(-2);
+            DateTime thirtyDaysAgo = today.AddDays(-60);
             string startDate = thirtyDaysAgo.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
             string endDate = today.ToString("dd/MM/yyyy 23:59", CultureInfo.InvariantCulture);
 
@@ -272,52 +272,5 @@ namespace Mails_Console
                 //Console.WriteLine("Error Generated Details: " + ab.ToString());
             }
         }
-
-        //private string GetRecipientEmailAddresses(Recipients recipients)
-        //{
-        //    if (recipients == null || recipients.Count == 0)
-        //    {
-        //        return string.Empty;
-        //    }
-
-        //    var addressList = new List<string>();
-        //    // COM collections are 1-based, so iterate from 1
-        //    for (int i = 1; i <= recipients.Count; i++)
-        //    {
-        //        Recipient recipient = recipients[i];
-        //        try
-        //        {
-        //            if (recipient.Type == (int)recipientType)
-        //            {
-        //                const string PR_SMTP_ADDRESS = "http://schemas.microsoft.com/mapi/proptag/0x39FE001E";
-        //                string smtpAddress = string.Empty;
-
-        //                // Use PropertyAccessor for reliable SMTP address lookup
-        //                try
-        //                {
-        //                    smtpAddress = recipient.PropertyAccessor.GetProperty(PR_SMTP_ADDRESS).ToString();
-        //                }
-        //                catch
-        //                {
-        //                    // Fallback to the regular Address property
-        //                    smtpAddress = recipient.Address;
-        //                }
-
-        //                if (!string.IsNullOrEmpty(smtpAddress))
-        //                {
-        //                    addressList.Add(smtpAddress);
-        //                }
-        //            }
-        //        }
-        //        finally
-        //        {
-        //            if (recipient != null) Marshal.ReleaseComObject(recipient);
-        //        }
-        //    }
-
-        //    if (recipients != null) Marshal.ReleaseComObject(recipients);
-
-        //    return string.Join(", ", addressList);
-        //}
     }
 }

@@ -1,37 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\parikhrm\\source\\repos\\WTW_EO_DotNet_Reading_Outlook_Mails\\Reading Outlook Mails\\Console_App\\KYCChecks_MailBox_Mails_Console - V1(VS 2022)\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{4234DFD1-910B-4864-8B89-E01D9DCE75DB}|Mails_Console\\Mails_Console.csproj|c:\\users\\parikhrm\\source\\repos\\wtw_eo_dotnet_reading_outlook_mails\\reading outlook mails\\console_app\\kycchecks_mailbox_mails_console - v1(vs 2022)\\mails_console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4234DFD1-910B-4864-8B89-E01D9DCE75DB}|Mails_Console\\Mails_Console.csproj|solutionrelative:mails_console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\parikhrm\\source\\repos\\WTW_EO_DotNet_Reading_Outlook_Mails\\Reading Outlook Mails\\Console_App\\KYCChecks_MailBox_Mails_Console - V1(VS 2022)\\Mails_Console\\Program.cs",
-              "RelativeDocumentMoniker": "Mails_Console\\Program.cs",
-              "ToolTip": "C:\\Users\\parikhrm\\source\\repos\\WTW_EO_DotNet_Reading_Outlook_Mails\\Reading Outlook Mails\\Console_App\\KYCChecks_MailBox_Mails_Console - V1(VS 2022)\\Mails_Console\\Program.cs",
-              "RelativeToolTip": "Mails_Console\\Program.cs",
-              "ViewState": "AgIAAFkAAAAAAAAAAAAQwDIAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-08T16:18:45.722Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }
