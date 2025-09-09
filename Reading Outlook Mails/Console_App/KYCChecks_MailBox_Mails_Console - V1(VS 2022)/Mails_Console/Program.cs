@@ -107,7 +107,7 @@ namespace Mails_Console
 
 
             DateTime today = DateTime.Today;
-            DateTime thirtyDaysAgo = today.AddDays(-60);
+            DateTime thirtyDaysAgo = today.AddDays(-2);
             string startDate = thirtyDaysAgo.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
             string endDate = today.ToString("dd/MM/yyyy 23:59", CultureInfo.InvariantCulture);
 
