@@ -136,105 +136,109 @@ namespace Mails_Console
                     MailItem mail = item as MailItem;
                     if (mail != null)
                     {
-                        try
+                        // ADD THIS CONDITION: Check if the mail's flag status is not flagged
+                        if (mail.FlagStatus == Microsoft.Office.Interop.Outlook.OlFlagStatus.olNoFlag)
                         {
-                            DateTime receivedtime = mail.ReceivedTime;
-                            string subject = mail.Subject;
-                            string cc = mail.CC;
-                            string categories = mail.Categories;
-                            var importance = mail.Importance;
-                            string entryid = mail.EntryID;
-                            bool isunread = mail.UnRead;
-
-                            bool isMarkedAsTask = mail.IsMarkedAsTask;
-                            //string taskStatus = ((OlTaskStatus)mail.TaskStatus).ToString();
-                            string flagStatus = string.Empty;
                             try
                             {
-                                // The correct property for MailItem flag status is FlagStatus
-                                Microsoft.Office.Interop.Outlook.OlFlagStatus olFlagStatus = mail.FlagStatus;
-                                flagStatus = Enum.GetName(typeof(Microsoft.Office.Interop.Outlook.OlFlagStatus), olFlagStatus);
-                            }
-                            catch
-                            {
-                                // Handle cases where the status is not a standard value
-                                flagStatus = "Unknown";
-                            }
+                                DateTime receivedtime = mail.ReceivedTime;
+                                string subject = mail.Subject;
+                                string cc = mail.CC;
+                                string categories = mail.Categories;
+                                var importance = mail.Importance;
+                                string entryid = mail.EntryID;
+                                bool isunread = mail.UnRead;
 
-                            string senderEmail = string.Empty;
-                            try
-                            {
-                                if (mail.SenderEmailType == "EX")
+                                bool isMarkedAsTask = mail.IsMarkedAsTask;
+                                //string taskStatus = ((OlTaskStatus)mail.TaskStatus).ToString();
+                                string flagStatus = string.Empty;
+                                try
                                 {
-                                    Outlook.AddressEntry senderEntry = mail.Sender;
-                                    if (senderEntry != null)
+                                    // The correct property for MailItem flag status is FlagStatus
+                                    Microsoft.Office.Interop.Outlook.OlFlagStatus olFlagStatus = mail.FlagStatus;
+                                    flagStatus = Enum.GetName(typeof(Microsoft.Office.Interop.Outlook.OlFlagStatus), olFlagStatus);
+                                }
+                                catch
+                                {
+                                    // Handle cases where the status is not a standard value
+                                    flagStatus = "Unknown";
+                                }
+
+                                string senderEmail = string.Empty;
+                                try
+                                {
+                                    if (mail.SenderEmailType == "EX")
                                     {
-                                        Outlook.ExchangeUser exchUser = senderEntry.GetExchangeUser();
-                                        if (exchUser != null && !string.IsNullOrEmpty(exchUser.PrimarySmtpAddress))
+                                        Outlook.AddressEntry senderEntry = mail.Sender;
+                                        if (senderEntry != null)
                                         {
-                                            senderEmail = exchUser.PrimarySmtpAddress;
-                                        }
-                                        else
-                                        {
-                                            senderEmail = senderEntry.Address;
-                                        }
-                                        if (exchUser != null) Marshal.ReleaseComObject(exchUser);
+                                            Outlook.ExchangeUser exchUser = senderEntry.GetExchangeUser();
+                                            if (exchUser != null && !string.IsNullOrEmpty(exchUser.PrimarySmtpAddress))
+                                            {
+                                                senderEmail = exchUser.PrimarySmtpAddress;
+                                            }
+                                            else
+                                            {
+                                                senderEmail = senderEntry.Address;
+                                            }
+                                            if (exchUser != null) Marshal.ReleaseComObject(exchUser);
 
+                                        }
+                                        if (senderEntry != null) Marshal.ReleaseComObject(senderEntry);
                                     }
-                                    if (senderEntry != null) Marshal.ReleaseComObject(senderEntry);
+                                    else
+                                    {
+                                        senderEmail = mail.SenderEmailAddress;
+                                    }
                                 }
-                                else
+                                catch (System.Exception ex)
                                 {
-                                    senderEmail = mail.SenderEmailAddress;
+                                    // Optional: log or handle the exception
+                                    senderEmail = mail.SenderEmailAddress; // fallback
                                 }
+
+                                // Call the helper method to get recipient email addresses
+                                //string toRecipients = GetRecipientEmailAddresses(mail.Recipients);
+
+                                // FIX: Get only 'To' addresses using the new helper method
+                                string toRecipients = GetRecipientAddressesFromCollection(mail.Recipients, OlMailRecipientType.olTo);
+
+
+
+                                using (SqlConnection conn = new SqlConnection(connectionstringtxt))
+                                {
+                                    conn.Open();
+                                    cmd.Parameters.Clear();
+                                    cmd.Connection = conn;
+                                    cmd.CommandText = "INSERT INTO dbo.tbl_outlook_mails_daily_dotnet_kycchecks_mumbai_mailbox " +
+                                                      "(Subject,ReceivedDateTime,Sender,Categories,CC,Importance,EntryID,UploadDateTime,IsUnread,[To],IsFlagged,FlagStatus) " +
+                                                      "VALUES (@Subject,@ReceivedDateTime,@Sender,@Categories,@CC,@Importance,@EntryID,@UploadDateTime,@IsUnread,@TO,@IsFlagged,@FlagStatus)";
+                                    cmd.Parameters.AddWithValue("Subject", subject ?? "");
+                                    cmd.Parameters.AddWithValue("@ReceivedDateTime", receivedtime);
+                                    cmd.Parameters.AddWithValue("@Sender", senderEmail ?? "");
+                                    cmd.Parameters.AddWithValue("@Categories", categories ?? "");
+                                    cmd.Parameters.AddWithValue("@CC", cc ?? "");
+                                    cmd.Parameters.AddWithValue("@Importance", importance);
+                                    cmd.Parameters.AddWithValue("@EntryID", entryid ?? "");
+                                    cmd.Parameters.AddWithValue("@UploadDateTime", DateTime.Now.ToLocalTime());
+                                    cmd.Parameters.AddWithValue("@IsUnread", isunread);
+                                    cmd.Parameters.AddWithValue("@TO", toRecipients ?? "");
+                                    cmd.Parameters.AddWithValue("@IsFlagged", isMarkedAsTask);
+                                    cmd.Parameters.AddWithValue("@FlagStatus", flagStatus);
+                                    cmd.ExecuteNonQuery();
+                                }
+
                             }
-                            catch (System.Exception ex)
+                            catch (System.Exception mailEx)
                             {
-                                // Optional: log or handle the exception
-                                senderEmail = mail.SenderEmailAddress; // fallback
+                                Console.WriteLine($"Error processing mail item: {mailEx.Message}");
                             }
-
-                            // Call the helper method to get recipient email addresses
-                            //string toRecipients = GetRecipientEmailAddresses(mail.Recipients);
-                            
-                            // FIX: Get only 'To' addresses using the new helper method
-                            string toRecipients = GetRecipientAddressesFromCollection(mail.Recipients, OlMailRecipientType.olTo);
-
-
-
-                            using (SqlConnection conn = new SqlConnection(connectionstringtxt))
+                            finally
                             {
-                                conn.Open();
-                                cmd.Parameters.Clear();
-                                cmd.Connection = conn;
-                                cmd.CommandText = "INSERT INTO dbo.tbl_outlook_mails_daily_dotnet_kycchecks_mumbai_mailbox " +
-                                                  "(Subject,ReceivedDateTime,Sender,Categories,CC,Importance,EntryID,UploadDateTime,IsUnread,[To],IsFlagged,FlagStatus) " +
-                                                  "VALUES (@Subject,@ReceivedDateTime,@Sender,@Categories,@CC,@Importance,@EntryID,@UploadDateTime,@IsUnread,@TO,@IsFlagged,@FlagStatus)";
-                                cmd.Parameters.AddWithValue("Subject", subject ?? "");
-                                cmd.Parameters.AddWithValue("@ReceivedDateTime", receivedtime);
-                                cmd.Parameters.AddWithValue("@Sender", senderEmail ?? "");
-                                cmd.Parameters.AddWithValue("@Categories", categories ?? "");
-                                cmd.Parameters.AddWithValue("@CC", cc ?? "");
-                                cmd.Parameters.AddWithValue("@Importance", importance);
-                                cmd.Parameters.AddWithValue("@EntryID", entryid ?? "");
-                                cmd.Parameters.AddWithValue("@UploadDateTime", DateTime.Now.ToLocalTime());
-                                cmd.Parameters.AddWithValue("@IsUnread", isunread);
-                                cmd.Parameters.AddWithValue("@TO", toRecipients ?? "");
-                                cmd.Parameters.AddWithValue("@IsFlagged", isMarkedAsTask);
-                                cmd.Parameters.AddWithValue("@FlagStatus", flagStatus);
-                                cmd.ExecuteNonQuery();
+                                if (mail != null) Marshal.ReleaseComObject(mail);
+                                //Marshal.ReleaseComObject(mail);
                             }
-                            
-                        }
-                        catch (System.Exception mailEx)
-                        {
-                            Console.WriteLine($"Error processing mail item: {mailEx.Message}");
-                        }
-                        finally
-                        {
-                            if (mail != null) Marshal.ReleaseComObject(mail);
-                            //Marshal.ReleaseComObject(mail);
-                        }
+                        } // End of the if (mail.FlagStatus...) block
                     }
                 }
             }
