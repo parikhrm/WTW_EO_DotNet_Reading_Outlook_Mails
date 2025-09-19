@@ -125,6 +125,12 @@ namespace Mails_Console
                 mailbox = outlookNamespace.Folders["kycchecksmumbai"];
                 inbox = mailbox.Folders["Inbox"];
 
+                // The DASL query for unflagged items uses the `FlagStatus` property, which has a
+                // numerical value of 0 for `olNoFlag`.
+                // The property is 'http://schemas.microsoft.com/mapi/proptag/0x10900003' or
+                // a GUID-based one. Using the `FlagStatus` property name is a simpler approach
+                // for most cases and maps to the correct MAPI property.
+
                 string filter = $"[ReceivedTime] >= '{startDate}' AND [ReceivedTime] <= '{endDate}'";
                 filteredItems = inbox.Items.Restrict(filter);
                 filteredItems.Sort("[ReceivedTime]", true);
