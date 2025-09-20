@@ -52,13 +52,16 @@ namespace Mails_Console_Monthly
             //DateTime enddate = new DateTime(2025, 08, 20);
 
             // Get today's date
-            DateTime today = DateTime.Today;
+            //DateTime today = DateTime.Today;
+            DateTime today = DateTime.Now;
             // Calculate the date 3 days ago
             DateTime threeDaysAgo = today.AddDays(-30);
 
             // Format the dates as "dd/MM/yyyy"
-            string startDate = threeDaysAgo.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
-            string endDate = today.ToString("dd/MM/yyyy 23:59", CultureInfo.InvariantCulture);
+            //string startDate = threeDaysAgo.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+            //string endDate = today.ToString("dd/MM/yyyy 23:59", CultureInfo.InvariantCulture);
+            string startDate = threeDaysAgo.ToString("yyyy-MM-dd HH:mm");
+            string endDate = today.ToString("yyyy-MM-dd HH:mm");
 
             Outlook.Items filteredItems = null;
 
@@ -80,7 +83,8 @@ namespace Mails_Console_Monthly
                 string filter = string.Format("[ReceivedTime] >= '{0}' AND [ReceivedTime] <= '{1}'", startDate, endDate);
 
                 filteredItems = inbox.Items.Restrict(filter);
-                filteredItems.Sort("[ReceivedTime]", true);
+                // Sort the filtered items by ReceivedTime in ascending order (oldest first)
+                filteredItems.Sort("[ReceivedTime]", false);
                 //items.Sort("[ReceivedTime]", true);
                 //string filter = $"[ReceivedTime] >= '{startdate:g}' AND [ReceivedTime] <= '{enddate:g}'";
                 //Outlook.Items filteredItems = inbox.Items.Restrict(filter);
@@ -100,7 +104,7 @@ namespace Mails_Console_Monthly
                         // ADD THIS CONDITION: Check if the mail's flag status is not flagged
                         //if (mail.FlagStatus == Microsoft.Office.Interop.Outlook.OlFlagStatus.olNoFlag)
                         //{
-                        //    try
+                            try
                             {
                                 DateTime receivedtime = mail.ReceivedTime;
                                 string subject = mail.Subject;
@@ -210,7 +214,7 @@ namespace Mails_Console_Monthly
                                 //System.Runtime.InteropServices.Marshal.ReleaseComObject(outlookApp);
 
                             }
-                        }//
+                        //}
                     }///start before this 
                     Marshal.ReleaseComObject(item);
                     Marshal.ReleaseComObject(filteredItems);

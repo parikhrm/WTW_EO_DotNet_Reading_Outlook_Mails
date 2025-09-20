@@ -57,8 +57,10 @@ namespace Mails_Console_Monthly
             DateTime threeDaysAgo = today.AddDays(-60);
 
             // Format the dates as "dd/MM/yyyy"
-            string startDate = threeDaysAgo.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
-            string endDate = today.ToString("dd/MM/yyyy 23:59", CultureInfo.InvariantCulture);
+            //string startDate = threeDaysAgo.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+            //string endDate = today.ToString("dd/MM/yyyy 23:59", CultureInfo.InvariantCulture);
+            string startDate = threeDaysAgo.ToString("yyyy-MM-dd HH:mm");
+            string endDate = today.ToString("yyyy-MM-dd HH:mm");
 
             Outlook.Items filteredItems = null;
 
@@ -80,7 +82,8 @@ namespace Mails_Console_Monthly
                 string filter = string.Format("[ReceivedTime] >= '{0}' AND [ReceivedTime] <= '{1}'", startDate, endDate);
 
                 filteredItems = inbox.Items.Restrict(filter);
-                filteredItems.Sort("[ReceivedTime]", true);
+                // Sort the filtered items by ReceivedTime in ascending order (oldest first)
+                filteredItems.Sort("[ReceivedTime]", false);
                 //items.Sort("[ReceivedTime]", true);
                 //string filter = $"[ReceivedTime] >= '{startdate:g}' AND [ReceivedTime] <= '{enddate:g}'";
                 //Outlook.Items filteredItems = inbox.Items.Restrict(filter);
