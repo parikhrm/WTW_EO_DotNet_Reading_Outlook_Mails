@@ -135,7 +135,7 @@ namespace Mails_Console
 
                 string filter = $"[ReceivedTime] >= '{startDate}' AND [ReceivedTime] <= '{endDate}'";
                 filteredItems = inbox.Items.Restrict(filter);
-                filteredItems.Sort("[ReceivedTime]", true);
+                filteredItems.Sort("[ReceivedTime]", false);
 
                 //Console.WriteLine($"Processing {filteredItems.Count} emails...");
 
