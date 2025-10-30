@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Outlook;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.OleDb;
 //using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Diagnostics;
 //new ones
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
+using System.Reflection;
 //using System.Windows.Forms.Integration;
 //using System.Windows.Forms.Design;
 using System.Runtime.InteropServices;
@@ -16,8 +19,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using Outlook = Microsoft.Office.Interop.Outlook;
-using Microsoft.Office.Interop.Outlook;
-using System.Diagnostics;
+
 
 
 
@@ -87,6 +89,14 @@ namespace Mails_Console
     {
         private string connectionstringtxt = "Data Source=A20-CB-DBSE01P;Initial Catalog=DRD;User ID=DRDUsers;Password=24252425";
 
+        // Helper method to properly release COM objects
+        private void ReleaseComObject(object obj)
+        {
+            if (obj != null)
+            {
+                Marshal.ReleaseComObject(obj);
+            }
+        }
         private string GetRecipientAddressesFromCollection(Recipients recipients, OlMailRecipientType recipientType)
         {
             if (recipients == null || recipients.Count == 0)
@@ -111,12 +121,12 @@ namespace Mails_Console
                         {
                             smtpAddress = recipient.PropertyAccessor.GetProperty(PR_SMTP_ADDRESS).ToString();
                         }
-                        catch
+                        catch (System.Exception ex)
                         {
                             // Fallback to the regular Address property, which can be an internal address
                             smtpAddress = recipient.Address;
+                            Console.WriteLine($"An error occurred during Outlook processing: {ex.Message}");
                         }
-
                         if (!string.IsNullOrEmpty(smtpAddress))
                         {
                             addressList.Add(smtpAddress);
@@ -125,7 +135,8 @@ namespace Mails_Console
                 }
                 finally
                 {
-                    if (recipient != null) Marshal.ReleaseComObject(recipient);
+                    //if (recipient != null) Marshal.ReleaseComObject(recipient);
+                    ReleaseComObject(recipient);
                 }
             }
 
@@ -133,7 +144,6 @@ namespace Mails_Console
 
             return string.Join(", ", addressList);
         }
-
         public void ProcessEmails()
         {
             SqlCommand cmd = new SqlCommand();
@@ -148,12 +158,12 @@ namespace Mails_Console
                     cmd.Connection = conn;
                     cmd.CommandText = "truncate table dbo.tbl_outlook_mails_daily_dotnet_kycchecks_mumbai_mailbox";
                     cmd.ExecuteNonQuery();
-                    //Console.WriteLine("Daily table truncated successfully.");
                 }
             }
             catch (System.Exception ex)
             {
                 //onsole.WriteLine($"Error truncating table: {ex.Message}");
+                Console.WriteLine($"An error occurred during Outlook processing: {ex.Message}");
             }
 
 
@@ -169,9 +179,6 @@ namespace Mails_Console
             NameSpace outlookNamespace = null;
             MAPIFolder mailbox = null;
             MAPIFolder inbox = null;
-            //Items items = null;
-
-            //OutlookHelper.KillOutlook(); // Ensure a clean slate
 
             //new code
             try
@@ -185,6 +192,7 @@ namespace Mails_Console
                 filteredItems = inbox.Items.Restrict(filter);
                 filteredItems.Sort("[ReceivedTime]", false);
 
+
                 // Use a 'for' loop to iterate and release each mail item explicitly.
                 for (int i = 1; i <= filteredItems.Count; i++)
                 {
@@ -196,55 +204,63 @@ namespace Mails_Console
                     try
                     {
                         mail = filteredItems[i] as MailItem;
+
                         if (mail != null && mail.FlagStatus == Microsoft.Office.Interop.Outlook.OlFlagStatus.olNoFlag)
                         {
                             DateTime receivedtime = mail.ReceivedTime;
                             string subject = mail.Subject;
-                            string cc = mail.CC;
+                            //string cc = mail.CC;
                             string categories = mail.Categories;
                             var importance = mail.Importance;
                             string entryid = mail.EntryID;
                             bool isunread = mail.UnRead;
                             bool isMarkedAsTask = mail.IsMarkedAsTask;
+                            string flagStatus = Enum.GetName(typeof(OlFlagStatus), mail.FlagStatus);
 
-                            string flagStatus = "Unknown";
+                            //string flagStatus = "Unknown";
                             try
                             {
                                 flagStatus = Enum.GetName(typeof(Microsoft.Office.Interop.Outlook.OlFlagStatus), mail.FlagStatus);
                             }
-                            catch { }
-
-                            string senderEmail = string.Empty;
-                            try
-                            {
-                                if (mail.SenderEmailType == "EX")
-                                {
-                                    senderEntry = mail.Sender;
-                                    if (senderEntry != null)
-                                    {
-                                        exchUser = senderEntry.GetExchangeUser();
-                                        if (exchUser != null && !string.IsNullOrEmpty(exchUser.PrimarySmtpAddress))
-                                        {
-                                            senderEmail = exchUser.PrimarySmtpAddress;
-                                        }
-                                        else
-                                        {
-                                            senderEmail = senderEntry.Address;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    senderEmail = mail.SenderEmailAddress;
-                                }
-                            }
                             catch (System.Exception ex)
                             {
-                                senderEmail = mail.SenderEmailAddress; // fallback
+                                Console.WriteLine($"An error occurred during Outlook processing: {ex.Message}");
                             }
 
-                            recipients = mail.Recipients;
-                            string toRecipients = GetRecipientAddressesFromCollection(recipients, OlMailRecipientType.olTo);
+                            string senderEmail = string.Empty;
+                            senderEntry = mail.Sender;
+                            //try
+                            //{
+                                //if (mail.SenderEmailType == "EX")
+                                //{
+                                    //senderEntry = mail.Sender;
+                                    //if (senderEntry != null)
+                                    //{
+                                    //    exchUser = senderEntry.GetExchangeUser();
+                                    //    if (exchUser != null && !string.IsNullOrEmpty(exchUser.PrimarySmtpAddress))
+                                    //    {
+                                    //        senderEmail = exchUser.PrimarySmtpAddress;
+                                    //    }
+                                    //    else
+                                    //    {
+                                    //        senderEmail = senderEntry.Address;
+                                    //    }
+                                    //}
+                                //}
+                                //else
+                                //{
+                                    //senderEmail = mail.SenderEmailAddress;
+                                //}
+                            //}
+                            //catch (System.Exception ex)
+                            //{
+                                //senderEmail = mail.SenderEmailAddress; // fallback
+                                //Console.WriteLine($"An error occurred during Outlook processing: {ex.Message}");
+                            //}
+
+                            //recipients = mail.Recipients;
+                            //string toRecipients = GetRecipientAddressesFromCollection(recipients, OlMailRecipientType.olTo);
+                            //ReleaseComObject(recipients); // Release here immediately after use
 
                             using (SqlConnection conn = new SqlConnection(connectionstringtxt))
                             {
@@ -254,18 +270,20 @@ namespace Mails_Console
                                 cmd.CommandText = "INSERT INTO dbo.tbl_outlook_mails_daily_dotnet_kycchecks_mumbai_mailbox " +
                                                   "(Subject,ReceivedDateTime,Sender,Categories,CC,Importance,EntryID,UploadDateTime,IsUnread,[To],IsFlagged,FlagStatus) " +
                                                   "VALUES (@Subject,@ReceivedDateTime,@Sender,@Categories,@CC,@Importance,@EntryID,@UploadDateTime,@IsUnread,@TO,@IsFlagged,@FlagStatus)";
-                                cmd.Parameters.AddWithValue("Subject", subject ?? "");
+                                cmd.Parameters.AddWithValue("Subject", (object)subject ?? DBNull.Value);
                                 cmd.Parameters.AddWithValue("@ReceivedDateTime", receivedtime);
-                                cmd.Parameters.AddWithValue("@Sender", senderEmail ?? "");
-                                cmd.Parameters.AddWithValue("@Categories", categories ?? "");
-                                cmd.Parameters.AddWithValue("@CC", cc ?? "");
+                                cmd.Parameters.AddWithValue("@Sender", (object)senderEmail ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("@Categories", (object)categories ?? DBNull.Value);
+                                //cmd.Parameters.AddWithValue("@CC", (object)cc ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("@CC", DBNull.Value);
                                 cmd.Parameters.AddWithValue("@Importance", importance);
-                                cmd.Parameters.AddWithValue("@EntryID", entryid ?? "");
+                                cmd.Parameters.AddWithValue("@EntryID", (object)entryid ?? DBNull.Value);
                                 cmd.Parameters.AddWithValue("@UploadDateTime", DateTime.Now.ToLocalTime());
                                 cmd.Parameters.AddWithValue("@IsUnread", isunread);
-                                cmd.Parameters.AddWithValue("@TO", toRecipients ?? "");
+                                //cmd.Parameters.AddWithValue("@TO", (object)toRecipients ?? DBNull.Value);
+                                cmd.Parameters.AddWithValue("@TO", DBNull.Value);
                                 cmd.Parameters.AddWithValue("@IsFlagged", isMarkedAsTask);
-                                cmd.Parameters.AddWithValue("@FlagStatus", flagStatus);
+                                cmd.Parameters.AddWithValue("@FlagStatus", (object)flagStatus ?? DBNull.Value);
                                 cmd.ExecuteNonQuery();
                             }
                         }
@@ -281,6 +299,8 @@ namespace Mails_Console
                         if (exchUser != null) Marshal.ReleaseComObject(exchUser);
                         if (senderEntry != null) Marshal.ReleaseComObject(senderEntry);
                         if (mail != null) Marshal.ReleaseComObject(mail);
+
+
                     }
                 }
             }
@@ -297,7 +317,9 @@ namespace Mails_Console
                 if (outlookNamespace != null) Marshal.ReleaseComObject(outlookNamespace);
                 if (outlookApp != null) Marshal.ReleaseComObject(outlookApp);
 
-                // Force garbage collection to clean up
+
+
+                //Force garbage collection to clean up
                 //GC.Collect();
                 //GC.WaitForPendingFinalizers();
                 for (int i = 0; i < 3; i++)

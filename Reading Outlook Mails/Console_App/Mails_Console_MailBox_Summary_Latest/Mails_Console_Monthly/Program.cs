@@ -89,8 +89,8 @@ namespace Mails_Console_Monthly
                             DateTime receivedtime = mail.ReceivedTime;
                             string subject = mail.Subject;
                             string sender = mail.SenderEmailAddress;
-                            string cc = mail.CC;
-                            string to = mail.To;
+                            //string cc = mail.CC;
+                            //string to = mail.To;
                             string categories = mail.Categories;
                             var importance = mail.Importance;
                             string entryid = mail.EntryID;
@@ -118,8 +118,8 @@ namespace Mails_Console_Monthly
                                 cmd.Parameters.AddWithValue("@ReceivedDateTime", receivedtime);
                                 cmd.Parameters.AddWithValue("@Sender", sender ?? "");
                                 cmd.Parameters.AddWithValue("@Categories", categories ?? "");
-                                cmd.Parameters.AddWithValue("@CC", cc ?? "");
-                                cmd.Parameters.AddWithValue("@TO", to ?? "");
+                                cmd.Parameters.AddWithValue("@CC", DBNull.Value);
+                                cmd.Parameters.AddWithValue("@TO", DBNull.Value);
                                 cmd.Parameters.AddWithValue("@Importance", importance);
                                 cmd.Parameters.AddWithValue("@EntryID", entryid ?? "");
                                 cmd.Parameters.AddWithValue("@UploadDateTime", DateTime.Now.ToLocalTime());
